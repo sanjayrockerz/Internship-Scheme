@@ -33,8 +33,7 @@ st.markdown(r"""
     }
     
     .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
-        background-attachment: fixed;
+        background: #ffffff;
         font-family: 'Inter', sans-serif;
         min-height: 100vh;
         color: #1f2937;
