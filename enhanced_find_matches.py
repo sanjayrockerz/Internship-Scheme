@@ -880,12 +880,12 @@ def main():
         # Action buttons with enhanced styling
         col1, col2 = st.columns(2)
         with col1:
-            if st.button("🎯 Find Perfect Matches", type="primary", use_container_width=True):
+            if st.button("🎯 Find Perfect Matches", type="primary", width="stretch"):
                 st.session_state.run_matching = True
                 st.session_state.run_allocation = False
         
         with col2:
-            if st.button("🚀 Run Smart Allocation", type="secondary", use_container_width=True):
+            if st.button("🚀 Run Smart Allocation", type="secondary", width="stretch"):
                 st.session_state.run_allocation = True
                 st.session_state.run_matching = False
         
@@ -1026,7 +1026,7 @@ def main():
                         """, unsafe_allow_html=True)
                         
                         # Apply button
-                        if st.button(f"Apply Now 🚀", key=f"apply_{internship['id']}", use_container_width=True):
+                        if st.button(f"Apply Now 🚀", key=f"apply_{internship['id']}", width="stretch"):
                             st.success("🎉 Application submitted successfully!")
                             st.balloons()
                     
@@ -1106,7 +1106,7 @@ def main():
                 height=400
             )
             
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
             
             # Detailed allocation table
             st.markdown("### 🎯 Detailed Allocations")
@@ -1135,7 +1135,7 @@ def main():
                     vmax=100
                 )
                 
-                st.dataframe(styled_df, use_container_width=True, height=400)
+                st.dataframe(styled_df, width="stretch", height=400)
                 
                 # Download button for results
                 csv = df.to_csv(index=False)
@@ -1167,7 +1167,7 @@ def main():
                     height=500
                 )
                 
-                st.plotly_chart(industry_fig, use_container_width=True)
+                st.plotly_chart(industry_fig, width="stretch")
     
     else:
         # Welcome message for new users

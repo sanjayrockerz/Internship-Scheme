@@ -1582,9 +1582,7 @@ def analytics_page():
     
     with col2:
         st.plotly_chart(fig2, width="stretch")
-        st.plotly_chart(fig4, width="stretch")
-
-def companies_page():
+        st.plotly_chart(fig4, width="stretch")def companies_page():
     """Enhanced Companies page with detailed company profiles"""
     st.markdown("# 🏢 Partner Companies Across India")
     
