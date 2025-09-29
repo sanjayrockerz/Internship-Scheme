@@ -1,0 +1,198 @@
+// PM Internship Smart Allocation Engine - World-Class React Application
+// Built with React + TypeScript + Tailwind CSS + Framer Motion
+
+impo    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      {/* Background Pattern */}
+      <div className="fixed inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%239C92AC\" fill-opacity=\"0.03\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"30\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30" />
+      
+      {/* Main Layout */}
+      <div className="relative flex h-screen overflow-hidden">
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col overflow-hidden">
+          {/* Page Content */}
+          <main className="flex-1 overflow-hidden">
+            <div className="h-full overflow-auto p-6">
+              {renderActiveComponent()}
+            </div>
+          </main>
+        </div>
+      </div>
+
+      {/* Global Toaster for Notifications */}
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 4000,
+          style: {
+            background: 'white',
+            color: '#374151',
+            boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            border: '1px solid #E5E7EB',
+            borderRadius: '12px',
+            padding: '16px',
+          },
+        }}
+      />
+    </div>
+  );
+}
+
+export default App;seState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Toaster } from 'react-hot-toast';
+import { 
+  DashboardIcon, 
+  PersonIcon, 
+  RocketIcon, 
+  BarChartIcon, 
+  GearIcon,
+  BellIcon 
+} from '@radix-ui/react-icons';
+
+// Import components (we'll create these next)
+import Dashboard from './components/Dashboard';
+import SmartAllocation from './components/SmartAllocation';
+import Analytics from './components/Analytics';
+import Settings from './components/Settings';
+import { Sidebar } from './components/ui/Sidebar';
+import { TopBar } from './components/ui/TopBar';
+import { LoadingScreen } from './components/ui/LoadingScreen';
+
+// Import mock data
+import { mockData, stats } from './data/mockDataGenerator';
+import { UIState } from './types';
+
+// Navigation items
+const navigationItems = [
+  { 
+    id: 'dashboard', 
+    label: 'Dashboard', 
+    icon: DashboardIcon,
+    description: 'Overview and key metrics'
+  },
+  { 
+    id: 'allocation', 
+    label: 'Smart Allocation', 
+    icon: RocketIcon,
+    description: 'AI-powered matching engine'
+  },
+  { 
+    id: 'analytics', 
+    label: 'Analytics', 
+    icon: BarChartIcon,
+    description: 'Reports and insights'
+  },
+  { 
+    id: 'settings', 
+    label: 'Settings', 
+    icon: GearIcon,
+    description: 'System configuration'
+  },
+];
+
+function App() {
+  // Application state
+  const [uiState, setUIState] = useState<UIState>({
+    activeView: 'dashboard',
+    isLoading: true,
+    filters: {
+      skills: [],
+      availability: [],
+      experience: { min: 0, max: 10 },
+      projectTypes: [],
+      complexity: [],
+      location: [],
+    },
+    sortBy: {
+      field: 'matchScore',
+      direction: 'desc',
+      label: 'Match Score (High to Low)'
+    },
+    searchQuery: '',
+  });
+
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [notifications, setNotifications] = useState(3);
+
+  // Simulate loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setUIState(prev => ({ ...prev, isLoading: false }));
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Handle navigation
+  const handleNavigation = (viewId: string) => {
+    setUIState(prev => ({ ...prev, activeView: viewId as any }));
+  };
+
+  // Update UI state
+  const updateUIState = (updates: Partial<UIState>) => {
+    setUIState(prev => ({ ...prev, ...updates }));
+  };
+
+  // Show loading screen
+  if (uiState.isLoading) {
+    return <LoadingScreen />;
+  };
+
+  // Render active component
+  const renderActiveComponent = () => {
+    switch (uiState.activeView) {
+      case 'dashboard':
+        return (
+          <Dashboard
+            stats={stats}
+            interns={mockData.interns}
+            projects={mockData.projects}
+            uiState={uiState}
+            updateUIState={updateUIState}
+          />
+        );
+      case 'allocation':
+        return (
+          <SmartAllocation
+            interns={mockData.interns}
+            projects={mockData.projects}
+            uiState={uiState}
+            updateUIState={updateUIState}
+          />
+        );
+      case 'analytics':
+        return (
+          <Analytics
+            interns={mockData.interns}
+            projects={mockData.projects}
+            stats={stats}
+            uiState={uiState}
+            updateUIState={updateUIState}
+          />
+        );
+      case 'settings':
+        return (
+          <Settings
+            uiState={uiState}
+            updateUIState={updateUIState}
+          />
+        );
+      default:
+        return null;
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <main className="container mx-auto px-4 py-6">
+        {renderActiveComponent()}
+      </main>
+    </div>
+  );
+}
+
+export default App;
