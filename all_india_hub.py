@@ -24,7 +24,7 @@ def health_check():
     return {"status": "healthy", "app": "Smart Internship Hub", "timestamp": datetime.now().isoformat()}
 
 # Enhanced World-Class CSS styling
-st.markdown("""
+st.markdown(r"""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     
@@ -82,7 +82,7 @@ st.markdown("""
     }
     
     .main-container::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -153,7 +153,7 @@ st.markdown("""
     }
     
     .hero-header::before {
-        content: '';
+        content: "";
         position: absolute;
         top: -50%;
         left: -50%;
@@ -187,7 +187,7 @@ st.markdown("""
     }
     
     .page-nav::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -238,7 +238,7 @@ st.markdown("""
     }
     
     .nav-button::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
@@ -301,7 +301,7 @@ st.markdown("""
     }
     
     .metric-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: 0;
@@ -493,7 +493,7 @@ st.markdown("""
     }
     
     .feature-card::before {
-        content: '';
+        content: "";
         position: absolute;
         top: 0;
         left: -100%;
@@ -582,7 +582,7 @@ st.markdown("""
     }
     
     .stButton > button::before {
-        content: '' !important;
+        content: "" !important;
         position: absolute !important;
         top: 0 !important;
         left: -100% !important;
