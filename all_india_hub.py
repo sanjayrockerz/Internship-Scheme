@@ -18,6 +18,11 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Health check endpoint for Streamlit Cloud
+def health_check():
+    """Health check for Streamlit Cloud deployment"""
+    return {"status": "healthy", "app": "All India Internship Hub", "timestamp": datetime.now().isoformat()}
+
 # Enhanced World-Class CSS styling
 st.markdown("""
 <style>
@@ -1804,4 +1809,8 @@ def main():
         profile_page()
 
 if __name__ == "__main__":
-    main()
+    # Handle health check for Streamlit Cloud
+    if hasattr(st, 'query_params') and "health" in st.query_params and st.query_params["health"] == "check":
+        st.json(health_check())
+    else:
+        main()
