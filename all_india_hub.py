@@ -446,6 +446,7 @@ def create_page_navigation():
     pages = {
         '🏠 Dashboard': 'Dashboard',
         '🔍 Find My Match': 'Matching',
+        '🎯 Smart Allocation': 'Allocation',
         '📊 Analytics Hub': 'Analytics',
         '🏢 Companies': 'Companies',
         '🎯 My Journey': 'Profile'
@@ -1789,6 +1790,223 @@ def profile_page():
         with col3:
             st.write(f"*Target: {goal['Target']}*")
 
+def smart_allocation_page():
+    """Smart Allocation System Page"""
+    st.markdown('<div class="main-container">', unsafe_allow_html=True)
+    
+    # Header
+    st.markdown("""
+    <div class="page-header">
+        <h1 style="font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); 
+                   -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            🎯 Smart Allocation System
+        </h1>
+        <p style="font-size: 1.2rem; color: #6b7280; margin-bottom: 2rem;">
+            AI-Powered Internship Allocation Based on Your Preferences
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Load allocation data
+    def load_allocation_data():
+        internships_data = {
+            'Technology': [
+                {
+                    'id': 'TECH001', 'title': 'Full Stack Developer Intern', 'company': 'TechCorp India',
+                    'location': 'Bangalore', 'duration': '6 months', 'stipend': '₹25,000/month',
+                    'skills_required': ['React', 'Node.js', 'MongoDB', 'JavaScript'],
+                    'difficulty': 'Intermediate', 'remote_option': True, 'start_date': '2025-11-01',
+                    'slots': 15, 'filled': 3
+                },
+                {
+                    'id': 'TECH002', 'title': 'AI/ML Research Intern', 'company': 'DeepMind India',
+                    'location': 'Hyderabad', 'duration': '4 months', 'stipend': '₹35,000/month',
+                    'skills_required': ['Python', 'TensorFlow', 'Machine Learning', 'Data Science'],
+                    'difficulty': 'Advanced', 'remote_option': True, 'start_date': '2025-10-15',
+                    'slots': 8, 'filled': 1
+                }
+            ],
+            'Finance': [
+                {
+                    'id': 'FIN001', 'title': 'Investment Banking Analyst', 'company': 'Goldman Sachs India',
+                    'location': 'Mumbai', 'duration': '6 months', 'stipend': '₹40,000/month',
+                    'skills_required': ['Financial Analysis', 'Excel', 'Bloomberg Terminal', 'Valuation'],
+                    'difficulty': 'Advanced', 'remote_option': False, 'start_date': '2025-11-15',
+                    'slots': 6, 'filled': 2
+                }
+            ]
+        }
+        
+        student_profiles = [
+            {
+                'id': 'STU001', 'name': 'Arjun Sharma',
+                'skills': ['Python', 'Machine Learning', 'Data Science', 'TensorFlow'],
+                'gpa': 8.7, 'year': 'Final Year', 'branch': 'Computer Science',
+                'location_preference': ['Bangalore', 'Hyderabad', 'Remote'],
+                'field_interest': 'Technology', 'experience_level': 'Intermediate'
+            },
+            {
+                'id': 'STU002', 'name': 'Priya Patel',
+                'skills': ['Financial Analysis', 'Excel', 'Bloomberg', 'Statistics'],
+                'gpa': 9.1, 'year': 'Third Year', 'branch': 'Finance',
+                'location_preference': ['Mumbai', 'Delhi'], 'field_interest': 'Finance',
+                'experience_level': 'Advanced'
+            }
+        ]
+        return internships_data, student_profiles
+    
+    def calculate_match_score(student, internship):
+        score = 0
+        student_skills = set([skill.lower() for skill in student['skills']])
+        required_skills = set([skill.lower() for skill in internship['skills_required']])
+        skill_match = len(student_skills.intersection(required_skills)) / len(required_skills)
+        score += skill_match * 40
+        if internship['location'] in student['location_preference'] or internship['remote_option']:
+            score += 20
+        if student['field_interest'].lower() == 'technology' and 'TECH' in internship['id']:
+            score += 25
+        elif student['field_interest'].lower() == 'finance' and 'FIN' in internship['id']:
+            score += 25
+        score += 15  # Base experience match
+        return min(100, score)
+    
+    def smart_allocation_algorithm(students, internships, preferences):
+        allocations = []
+        matches = []
+        for student in students:
+            for field, field_internships in internships.items():
+                for internship in field_internships:
+                    if internship['filled'] < internship['slots']:
+                        score = calculate_match_score(student, internship)
+                        matches.append({
+                            'student': student, 'internship': internship, 'score': score, 'field': field
+                        })
+        
+        matches.sort(key=lambda x: x['score'], reverse=True)
+        allocated_students = set()
+        
+        for match in matches[:preferences['max_allocations']]:
+            if match['student']['id'] not in allocated_students:
+                if match['score'] >= preferences['min_match_score']:
+                    allocations.append({
+                        'student_name': match['student']['name'],
+                        'internship_title': match['internship']['title'],
+                        'company': match['internship']['company'],
+                        'location': match['internship']['location'],
+                        'match_score': match['score'],
+                        'stipend': match['internship']['stipend'],
+                        'field': match['field']
+                    })
+                    allocated_students.add(match['student']['id'])
+        return allocations
+    
+    # Sidebar controls
+    with st.sidebar:
+        st.markdown("### 🎛️ Allocation Preferences")
+        max_allocations = st.slider("Maximum Allocations", 1, 20, 10)
+        min_match_score = st.slider("Minimum Match Score (%)", 0, 100, 60)
+        
+        st.markdown("### 📊 Filter Options")
+        selected_fields = st.multiselect("Select Fields", ['Technology', 'Finance'], default=['Technology', 'Finance'])
+        
+        run_allocation = st.button("🚀 Run Smart Allocation", type="primary")
+    
+    # Main content
+    internships_data, student_profiles = load_allocation_data()
+    
+    # Preferences display
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.metric("Max Allocations", max_allocations)
+    with col2:
+        st.metric("Min Match Score", f"{min_match_score}%")
+    with col3:
+        st.metric("Available Students", len(student_profiles))
+    
+    if run_allocation:
+        with st.spinner("🤖 Running Smart Allocation Algorithm..."):
+            progress_bar = st.progress(0)
+            for i in range(100):
+                time.sleep(0.01)
+                progress_bar.progress(i + 1)
+            
+            preferences = {
+                'max_allocations': max_allocations,
+                'min_match_score': min_match_score,
+                'selected_fields': selected_fields
+            }
+            
+            allocations = smart_allocation_algorithm(student_profiles, internships_data, preferences)
+            st.session_state.allocation_results = allocations
+            st.success(f"✅ Successfully allocated {len(allocations)} internships!")
+    
+    # Display results
+    if 'allocation_results' in st.session_state and st.session_state.allocation_results:
+        st.markdown("### 🎉 Allocation Results")
+        df_results = pd.DataFrame(st.session_state.allocation_results)
+        
+        # Enhanced results display
+        for idx, result in enumerate(st.session_state.allocation_results):
+            with st.expander(f"#{idx+1} {result['student_name']} → {result['internship_title']} ({result['match_score']:.1f}% match)"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.write(f"**Company:** {result['company']}")
+                    st.write(f"**Location:** {result['location']}")
+                with col2:
+                    st.write(f"**Field:** {result['field']}")
+                    st.write(f"**Stipend:** {result['stipend']}")
+                with col3:
+                    st.write(f"**Match Score:** {result['match_score']:.1f}%")
+                    st.progress(result['match_score']/100)
+        
+        # Download option
+        csv = df_results.to_csv(index=False)
+        st.download_button(
+            label="📥 Download Results as CSV",
+            data=csv,
+            file_name=f"allocation_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv",
+            mime="text/csv"
+        )
+    
+    # Available internships overview
+    st.markdown("### 🏢 Available Internships")
+    
+    tab1, tab2 = st.tabs(["🔧 Technology", "💰 Finance"])
+    
+    with tab1:
+        for internship in internships_data['Technology']:
+            with st.expander(f"{internship['title']} - {internship['company']}"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.write(f"**Location:** {internship['location']}")
+                    st.write(f"**Duration:** {internship['duration']}")
+                with col2:
+                    st.write(f"**Stipend:** {internship['stipend']}")
+                    st.write(f"**Difficulty:** {internship['difficulty']}")
+                with col3:
+                    available = internship['slots'] - internship['filled']
+                    st.write(f"**Available:** {available}/{internship['slots']}")
+                    st.progress(internship['filled'] / internship['slots'])
+                st.write(f"**Skills:** {', '.join(internship['skills_required'])}")
+    
+    with tab2:
+        for internship in internships_data['Finance']:
+            with st.expander(f"{internship['title']} - {internship['company']}"):
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.write(f"**Location:** {internship['location']}")
+                    st.write(f"**Duration:** {internship['duration']}")
+                with col2:
+                    st.write(f"**Stipend:** {internship['stipend']}")
+                    st.write(f"**Difficulty:** {internship['difficulty']}")
+                with col3:
+                    available = internship['slots'] - internship['filled']
+                    st.write(f"**Available:** {available}/{internship['slots']}")
+                    st.progress(internship['filled'] / internship['slots'])
+                st.write(f"**Skills:** {', '.join(internship['skills_required'])}")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+
 def main():
     """Main application entry point"""
     init_session_state()
@@ -1801,6 +2019,8 @@ def main():
         dashboard_page()
     elif st.session_state.current_page == 'Matching':
         matching_page()
+    elif st.session_state.current_page == 'Allocation':
+        smart_allocation_page()
     elif st.session_state.current_page == 'Analytics':
         analytics_page()
     elif st.session_state.current_page == 'Companies':
