@@ -30,24 +30,29 @@ st.markdown("""
     .stApp {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
         font-family: 'Inter', sans-serif;
-        animation: gradientShift 15s ease infinite;
+        animation: gradientShift 20s ease infinite;
+        min-height: 100vh;
     }
     
     @keyframes gradientShift {
-        0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%); }
+        0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%); }
+        25% { background: linear-gradient(135deg, #f093fb 0%, #4facfe 25%, #00f2fe 50%, #667eea 75%, #764ba2 100%); }
         50% { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 25%, #667eea 50%, #764ba2 75%, #f093fb 100%); }
+        75% { background: linear-gradient(135deg, #00f2fe 0%, #667eea 25%, #764ba2 50%, #f093fb 75%, #4facfe 100%); }
+        100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%); }
     }
     
     .allocation-container {
-        background: rgba(255, 255, 255, 0.98);
+        background: rgba(255, 255, 255, 0.95);
         border-radius: 25px;
         padding: 2.5rem;
         margin: 1rem;
         backdrop-filter: blur(25px);
-        box-shadow: 0 30px 60px rgba(31, 38, 135, 0.5);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.8);
         position: relative;
         overflow: hidden;
+        color: #1f2937;
     }
     
     .allocation-container::before {

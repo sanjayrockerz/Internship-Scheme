@@ -12,8 +12,8 @@ import random
 
 # Configure Streamlit page
 st.set_page_config(
-    page_title="All India Internship Hub",
-    page_icon="🇮🇳",
+    page_title="Smart Internship Hub",
+    page_icon="�",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -21,7 +21,7 @@ st.set_page_config(
 # Health check endpoint for Streamlit Cloud
 def health_check():
     """Health check for Streamlit Cloud deployment"""
-    return {"status": "healthy", "app": "All India Internship Hub", "timestamp": datetime.now().isoformat()}
+    return {"status": "healthy", "app": "Smart Internship Hub", "timestamp": datetime.now().isoformat()}
 
 # Enhanced World-Class CSS styling
 st.markdown("""
@@ -33,26 +33,52 @@ st.markdown("""
     }
     
     .stApp {
-        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #667eea 50%, #764ba2 75%, #f093fb 100%);
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+        background-attachment: fixed;
         font-family: 'Inter', sans-serif;
-        animation: gradientShift 10s ease infinite;
-    }
-    
-    @keyframes gradientShift {
-        0%, 100% { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 25%, #667eea 50%, #764ba2 75%, #f093fb 100%); }
-        50% { background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%); }
+        min-height: 100vh;
+        color: #1f2937;
     }
     
     .main-container {
-        background: rgba(255, 255, 255, 0.98);
-        border-radius: 25px;
-        padding: 2.5rem;
-        margin: 1rem;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 25px 45px rgba(31, 38, 135, 0.4);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+        border-radius: 30px;
+        padding: 3rem;
+        margin: 1.5rem;
+        backdrop-filter: blur(25px);
+        box-shadow: 0 25px 50px rgba(102, 126, 234, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.3);
+        border: 3px solid transparent;
+        background-clip: padding-box;
         position: relative;
         overflow: hidden;
+        color: #1f2937;
+        transition: all 0.3s ease;
+    }
+    
+    .main-container:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 35px 70px rgba(102, 126, 234, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.4);
+    }
+    
+    /* Mobile Responsiveness */
+    @media screen and (max-width: 768px) {
+        .main-container {
+            padding: 1.5rem;
+            margin: 0.5rem;
+            border-radius: 20px;
+        }
+        
+        .main-container:hover {
+            transform: none;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .main-container {
+            padding: 1rem;
+            margin: 0.25rem;
+            border-radius: 15px;
+        }
     }
     
     .main-container::before {
@@ -67,23 +93,63 @@ st.markdown("""
     }
     
     .hero-header {
-        background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #feca57 100%);
-        padding: 4rem 3rem;
-        border-radius: 30px;
+        background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 15%, #45b7d1 30%, #96ceb4 45%, #feca57 60%, #ff9ff3 75%, #54a0ff 90%, #5f27cd 100%);
+        padding: 5rem 3rem;
+        border-radius: 35px;
         color: white;
         text-align: center;
         margin-bottom: 3rem;
         position: relative;
         overflow: hidden;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        animation: heroGlow 8s ease-in-out infinite;
+        box-shadow: 0 30px 60px rgba(255, 107, 107, 0.4), 0 0 100px rgba(78, 205, 196, 0.3);
+        animation: heroGlow 10s ease-in-out infinite, heroFloat 6s ease-in-out infinite;
+        transform-style: preserve-3d;
+    }
+    
+    /* Mobile Hero Header */
+    @media screen and (max-width: 768px) {
+        .hero-header {
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin-bottom: 2rem;
+            animation: heroGlow 10s ease-in-out infinite;
+        }
+        
+        .hero-header h1 {
+            font-size: 2.5rem !important;
+        }
+        
+        .hero-header p {
+            font-size: 1.1rem !important;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .hero-header {
+            padding: 2rem 1rem;
+            border-radius: 20px;
+        }
+        
+        .hero-header h1 {
+            font-size: 2rem !important;
+        }
+        
+        .hero-header p {
+            font-size: 1rem !important;
+        }
     }
     
     @keyframes heroGlow {
-        0%, 100% { box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3); }
-        25% { box-shadow: 0 20px 40px rgba(78, 205, 196, 0.3); }
-        50% { box-shadow: 0 20px 40px rgba(69, 183, 209, 0.3); }
-        75% { box-shadow: 0 20px 40px rgba(150, 206, 180, 0.3); }
+        0% { box-shadow: 0 30px 60px rgba(255, 107, 107, 0.4), 0 0 100px rgba(78, 205, 196, 0.3); }
+        25% { box-shadow: 0 25px 50px rgba(78, 205, 196, 0.5), 0 0 120px rgba(69, 183, 209, 0.4); }
+        50% { box-shadow: 0 35px 70px rgba(69, 183, 209, 0.6), 0 0 140px rgba(150, 206, 180, 0.5); }
+        75% { box-shadow: 0 25px 50px rgba(150, 206, 180, 0.5), 0 0 120px rgba(254, 202, 87, 0.4); }
+        100% { box-shadow: 0 30px 60px rgba(255, 107, 107, 0.4), 0 0 100px rgba(78, 205, 196, 0.3); }
+    }
+    
+    @keyframes heroFloat {
+        0%, 100% { transform: translateY(0px) rotateX(0deg); }
+        50% { transform: translateY(-10px) rotateX(2deg); }
     }
     
     .hero-header::before {
@@ -108,13 +174,49 @@ st.markdown("""
     }
     
     .page-nav {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+        border-radius: 25px;
+        padding: 2rem;
+        margin-bottom: 3rem;
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(20px);
+        border: 3px solid transparent;
+        background-clip: padding-box;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .page-nav::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff9ff3, #54a0ff);
+        animation: navShimmer 3s linear infinite;
+    }
+    
+    @keyframes navShimmer {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+    
+    /* Mobile Navigation */
+    @media screen and (max-width: 768px) {
+        .page-nav {
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .page-nav {
+            padding: 0.75rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
     }
     
     .nav-button {
@@ -161,17 +263,41 @@ st.markdown("""
         box-shadow: 0 15px 35px rgba(255, 107, 107, 0.5);
     }
     
+    /* Mobile Navigation Buttons */
+    @media screen and (max-width: 768px) {
+        .nav-button {
+            padding: 12px 20px;
+            margin: 5px;
+            font-size: 13px;
+            border-radius: 25px;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .nav-button {
+            padding: 10px 15px;
+            margin: 3px;
+            font-size: 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            width: auto;
+        }
+    }
+    
     .metric-card {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        padding: 2rem;
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%);
+        border-radius: 25px;
+        padding: 2.5rem;
         text-align: center;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.3);
+        border: 3px solid transparent;
+        background-clip: padding-box;
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         position: relative;
         overflow: hidden;
-        backdrop-filter: blur(10px);
+        backdrop-filter: blur(15px);
+        animation: cardFloat 8s ease-in-out infinite;
     }
     
     .metric-card::before {
@@ -185,9 +311,41 @@ st.markdown("""
     }
     
     .metric-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
-        border-color: rgba(102, 126, 234, 0.5);
+        transform: translateY(-15px) rotateY(8deg) scale(1.05);
+        box-shadow: 0 35px 70px rgba(102, 126, 234, 0.35), 0 0 100px rgba(255, 107, 107, 0.2);
+        border: 3px solid rgba(102, 126, 234, 0.6);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.98) 0%, rgba(102, 126, 234, 0.1) 100%);
+    }
+    
+    @keyframes cardFloat {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-5px) rotate(1deg); }
+        66% { transform: translateY(5px) rotate(-1deg); }
+    }
+    
+    /* Mobile Metric Cards */
+    @media screen and (max-width: 768px) {
+        .metric-card {
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .metric-card {
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 0.75rem;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px) scale(1.01);
+        }
     }
     
     .metric-value {
@@ -205,6 +363,27 @@ st.markdown("""
         font-size: 1rem;
         color: #718096;
         font-weight: 600;
+    }
+    
+    /* Mobile Metric Text */
+    @media screen and (max-width: 768px) {
+        .metric-value {
+            font-size: 2.5rem;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .metric-value {
+            font-size: 2rem;
+        }
+        
+        .metric-label {
+            font-size: 0.8rem;
+        }
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
@@ -353,11 +532,220 @@ st.markdown("""
     }
     
     .gradient-text {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #1e40af 0%, #1e293b 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         font-weight: 800;
+    }
+    
+    /* Ensure all text is visible with good contrast */
+    .stMarkdown, .stText, p, div, span, h1, h2, h3, h4, h5, h6 {
+        color: #1f2937 !important;
+    }
+    
+    .stMarkdown h1, .stMarkdown h2, .stMarkdown h3 {
+        color: #111827 !important;
+        font-weight: 700 !important;
+    }
+    
+    /* Fix sidebar text visibility */
+    .css-1d391kg, .css-1v0mbdj, .css-1lcbmhc {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+        color: #1f2937 !important;
+        border-radius: 20px !important;
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15) !important;
+        backdrop-filter: blur(15px) !important;
+    }
+    
+    /* Navigation button text visibility */
+    .stButton > button {
+        color: white !important;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+        border: 3px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 20px !important;
+        font-weight: 700 !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        min-height: 55px !important;
+        font-size: 15px !important;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 50%, #45b7d1 100%) !important;
+        color: white !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-5px) scale(1.05) !important;
+        box-shadow: 0 20px 40px rgba(255, 107, 107, 0.4), 0 0 60px rgba(78, 205, 196, 0.3) !important;
+    }
+    
+    .stButton > button::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+        transition: left 0.5s !important;
+    }
+    
+    .stButton > button:hover::before {
+        left: 100% !important;
+    }
+    
+    /* Fix selectbox text visibility */
+    .stSelectbox > div > div {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+        color: #1f2937 !important;
+        border: 3px solid rgba(102, 126, 234, 0.3) !important;
+        border-radius: 15px !important;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stSelectbox > div > div:hover {
+        border-color: rgba(102, 126, 234, 0.6) !important;
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.2) !important;
+    }
+    
+    /* Fix input field visibility */
+    .stTextInput > div > div > input {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+        color: #1f2937 !important;
+        border: 3px solid rgba(102, 126, 234, 0.3) !important;
+        border-radius: 15px !important;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.1) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .stTextInput > div > div > input:focus {
+        border-color: rgba(102, 126, 234, 0.8) !important;
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3), 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+    }
+    
+    /* Mobile Input Fields */
+    @media screen and (max-width: 768px) {
+        .stTextInput > div > div > input {
+            padding: 10px 15px !important;
+            font-size: 14px !important;
+            border-radius: 12px !important;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .stTextInput > div > div > input {
+            padding: 8px 12px !important;
+            font-size: 13px !important;
+            border-radius: 10px !important;
+        }
+    }
+    
+    /* Fix metric display */
+    [data-testid="metric-container"] {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+        border: 3px solid rgba(102, 126, 234, 0.2) !important;
+        border-radius: 20px !important;
+        padding: 1.5rem !important;
+        box-shadow: 0 15px 35px rgba(102, 126, 234, 0.15) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    [data-testid="metric-container"]:hover {
+        transform: translateY(-3px) !important;
+        box-shadow: 0 20px 45px rgba(102, 126, 234, 0.25) !important;
+        border-color: rgba(102, 126, 234, 0.4) !important;
+    }
+    
+    /* Mobile Metric Containers */
+    @media screen and (max-width: 768px) {
+        [data-testid="metric-container"] {
+            padding: 1rem !important;
+            border-radius: 15px !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        [data-testid="metric-container"]:hover {
+            transform: translateY(-2px) !important;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        [data-testid="metric-container"] {
+            padding: 0.75rem !important;
+            border-radius: 12px !important;
+            margin-bottom: 0.75rem !important;
+        }
+        
+        [data-testid="metric-container"]:hover {
+            transform: translateY(-1px) !important;
+        }
+    }
+    
+    [data-testid="metric-container"] > div {
+        color: #1f2937 !important;
+    }
+    
+    /* Fix expander visibility */
+    .streamlit-expanderHeader {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1f2937 !important;
+        border: 2px solid #e2e8f0 !important;
+    }
+    
+    .streamlit-expanderContent {
+        background: rgba(255, 255, 255, 0.95) !important;
+        color: #1f2937 !important;
+        border: 2px solid #e2e8f0 !important;
+        border-top: none !important;
+    }
+    
+    /* Fix dataframe visibility */
+    .stDataFrame {
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 12px !important;
+    }
+    
+    /* Fix tab visibility */
+    .stTabs [data-baseweb="tab-list"] {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%) !important;
+        border-radius: 20px !important;
+        border: 3px solid rgba(102, 126, 234, 0.2) !important;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.1) !important;
+        padding: 8px !important;
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: #1f2937 !important;
+        font-weight: 700 !important;
+        border-radius: 15px !important;
+        transition: all 0.3s ease !important;
+        margin: 0 4px !important;
+    }
+    
+    .stTabs [data-baseweb="tab"]:hover {
+        background: rgba(102, 126, 234, 0.1) !important;
+        color: #667eea !important;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%) !important;
+        color: white !important;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3) !important;
+        transform: translateY(-2px) !important;
+    }
+    
+    /* Add pulse animation to active elements */
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.8; }
+    }
+    
+    .stTabs [aria-selected="true"] {
+        animation: pulse 2s infinite !important;
     }
     
     .floating-particles {
@@ -383,9 +771,54 @@ st.markdown("""
     }
     
     .stProgress > div > div {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        height: 10px;
-        border-radius: 5px;
+        background: linear-gradient(90deg, #ff6b6b 0%, #4ecdc4 25%, #45b7d1 50%, #96ceb4 75%, #feca57 100%);
+        height: 12px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        animation: progressGlow 2s ease-in-out infinite;
+    }
+    
+    @keyframes progressGlow {
+        0%, 100% { box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3); }
+        50% { box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4); }
+    }
+    
+    /* Add floating particles effect */
+    .floating-particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+    }
+    
+    .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        border-radius: 50%;
+        animation: particleFloat 15s linear infinite;
+        opacity: 0.6;
+    }
+    
+    @keyframes particleFloat {
+        0% {
+            transform: translateY(100vh) rotate(0deg);
+            opacity: 0;
+        }
+        10% {
+            opacity: 0.6;
+        }
+        90% {
+            opacity: 0.6;
+        }
+        100% {
+            transform: translateY(-100px) rotate(360deg);
+            opacity: 0;
+        }
     }
     
     .india-flag {
@@ -404,6 +837,83 @@ st.markdown("""
         padding: 1.5rem;
         margin: 1rem 0;
         border: 2px solid rgba(255, 153, 51, 0.3);
+    }
+    
+    /* Mobile Columns and General Layout */
+    @media screen and (max-width: 768px) {
+        .stColumn {
+            padding: 0.5rem !important;
+        }
+        
+        .block-container {
+            padding: 1rem !important;
+            max-width: 100% !important;
+        }
+        
+        .stSelectbox > div > div {
+            padding: 8px 12px !important;
+            font-size: 14px !important;
+        }
+        
+        .stButton > button {
+            padding: 8px 16px !important;
+            font-size: 14px !important;
+            border-radius: 20px !important;
+        }
+        
+        .regional-highlight {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 12px;
+        }
+    }
+    
+    @media screen and (max-width: 480px) {
+        .stColumn {
+            padding: 0.25rem !important;
+            margin: 0 !important;
+        }
+        
+        .block-container {
+            padding: 0.5rem !important;
+        }
+        
+        .stSelectbox > div > div {
+            padding: 6px 10px !important;
+            font-size: 13px !important;
+        }
+        
+        .stButton > button {
+            padding: 6px 12px !important;
+            font-size: 13px !important;
+            border-radius: 15px !important;
+            width: 100% !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .regional-highlight {
+            padding: 0.75rem;
+            margin: 0.25rem 0;
+            border-radius: 10px;
+        }
+        
+        /* Stack columns vertically on mobile */
+        .row-widget.stRadio > div {
+            flex-direction: column !important;
+        }
+        
+        /* Better text sizing for mobile */
+        h1 {
+            font-size: 1.8rem !important;
+        }
+        
+        h2 {
+            font-size: 1.5rem !important;
+        }
+        
+        h3 {
+            font-size: 1.3rem !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -463,15 +973,15 @@ def create_page_navigation():
     st.markdown('</div>', unsafe_allow_html=True)
 
 def create_hero_section():
-    """Create stunning hero section for All India"""
+    """Create stunning hero section for Smart Hub"""
     st.markdown("""
     <div class="hero-header">
         <div class="hero-content">
             <h1 style="font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem;">
-                🇮🇳 All India Internship Hub
+                Smart Internship Hub
             </h1>
             <p style="font-size: 1.4rem; opacity: 0.95; margin-bottom: 1rem;">
-                Connecting Every Talent Across Every Industry • From Kashmir to Kanyakumari
+                Connecting Every Talent Across Every Industry • Smart Matching • AI-Powered
             </p>
             <p style="font-size: 1.1rem; opacity: 0.85;">
                 Technology • Healthcare • Finance • Manufacturing • Agriculture • Education • More
@@ -999,13 +1509,13 @@ def create_advanced_all_india_charts():
     return fig1, fig2, fig3, fig4
 
 def dashboard_page():
-    """Enhanced dashboard for All India"""
+    """Enhanced dashboard for Smart Hub"""
     create_hero_section()
     
     # Add floating particles
     st.markdown(create_floating_particles(), unsafe_allow_html=True)
     
-    # Key Metrics for All India
+    # Key Metrics for Smart Hub
     metrics = [
         ("Total Opportunities", "50,000+", "🇮🇳"),
         ("Industries Covered", "12+", "🏭"),
@@ -1017,10 +1527,10 @@ def dashboard_page():
     # Add Run Allocation button
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        if st.button("🚀 Run All India Smart Allocation", type="primary", width="stretch"):
+        if st.button("🚀 Run Smart Allocation", type="primary", width="stretch"):
             with st.spinner("🔄 Analyzing pan-India opportunities and regional preferences..."):
                 time.sleep(3)
-                st.success("✅ All India allocation analysis completed successfully!")
+                st.success("✅ Smart allocation analysis completed successfully!")
                 st.balloons()
                 
                 # Show regional allocation
@@ -1059,7 +1569,7 @@ def dashboard_page():
             """, unsafe_allow_html=True)
     
     # Charts Section
-    st.markdown("## 📊 All India Analytics Dashboard")
+    st.markdown("## 📊 Smart Analytics Dashboard")
     
     fig1, fig2, fig3, fig4 = create_advanced_all_india_charts()
     
